@@ -7,19 +7,22 @@ const UserCards = () => {
   const { users, error, isPending } = useUsers()
   const skeletonArray = [1, 2, 3, 4];
   if (isPending) return (
-    <Box display={'flex'} alignItems={'center'} gap={4} my={5}>
-      {
-        skeletonArray.map(e =>
-          <Card.Root key={e} width={'20rem'}>
-            <Card.Body>
-              <Box display={'flex'} alignItems={'center'} gap={4}>
-                <SkeletonCircle size="70px" />
-                <SkeletonText noOfLines={1} />
-              </Box>
-            </Card.Body>
-          </Card.Root>
-        )
-      }
+    <Box p={3}>
+      <Heading fontSize={'2rem'} my={5}>Loading...</Heading>
+      <Box display={'flex'} alignItems={'center'} gap={4} my={5}>
+        {
+          skeletonArray.map(e =>
+            <Card.Root key={e} width={'20rem'}>
+              <Card.Body>
+                <Box display={'flex'} alignItems={'center'} gap={4}>
+                  <SkeletonCircle size="70px" />
+                  <SkeletonText noOfLines={1} />
+                </Box>
+              </Card.Body>
+            </Card.Root>
+          )
+        }
+      </Box>
     </Box>
   )
 
