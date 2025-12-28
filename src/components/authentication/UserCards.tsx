@@ -1,4 +1,4 @@
-import useUsers from "@/services/use-users"
+import useUsers from "@/hooks/use-users"
 
 const UserCards = () => {
   const { users, error, isPending } = useUsers()

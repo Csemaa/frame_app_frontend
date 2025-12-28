@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "./api-client";
+import apiClient from "../services/api-client";
 import type { User } from "@/entities/User";
 
 const useUsers = () => {
@@ -8,7 +8,8 @@ const useUsers = () => {
 
     const {data: users, error, isPending } = useQuery({
         queryKey: ['users'],
-        queryFn: fetchUsers
+        queryFn: fetchUsers,
+        staleTime: 2 * 60 * 60 * 1000 //2h
     })
 
     return {users, error, isPending }
