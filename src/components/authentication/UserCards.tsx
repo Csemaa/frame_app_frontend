@@ -1,14 +1,16 @@
 import useUsers from "@/hooks/use-users"
+import useAuthStore from "@/store"
 import { getAvatar } from "@/utils/get-avatar"
 import { Box, Card, Heading, Image, SkeletonCircle, SkeletonText, Text } from "@chakra-ui/react"
 
 
 const UserCards = () => {
+  const { login } = useAuthStore()
   const { users, error, isPending } = useUsers()
   const skeletonArray = [1, 2, 3, 4];
   if (isPending) return (
     <Box p={3}>
-      <Heading fontSize={'2rem'} my={5}>Loading...</Heading>
+      <Heading size={'3xl'} my={5}>Loading...</Heading>
       <Box display={'flex'} alignItems={'center'} gap={4} my={5}>
         {
           skeletonArray.map(e =>
@@ -37,7 +39,7 @@ const UserCards = () => {
       <Heading fontSize={'2rem'} my={5}>Select a user</Heading>
       <Box display={'flex'} alignItems={'center'} gap={4}>
         {users.map(user => (
-          <Card.Root key={user.id} width={'20rem'}>
+          <Card.Root key={user.id} width={'20rem'} onClick={() => login(user)}>
             <Card.Body>
               <Box display={'flex'} alignItems={'center'} gap={4}>
                 <Image
