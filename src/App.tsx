@@ -1,18 +1,16 @@
 import { Box } from "@chakra-ui/react"
 import UserCards from "./components/authentication/UserCards"
-import UserForm from "./components/authentication/UserForm"
 import Navbar from "./components/Navbar"
+import MoviesList from "./components/movies/MoviesList"
 
 function App() {
 
   return (
     <>
-      <Navbar/>
-      <Box>
+      <Navbar />
+      <Box p={5}>
         <UserCards />
-        <Box display={'flex'} justifyContent={'center'} mt={5}>
-          <UserForm />
-        </Box>
+        <MoviesList />
       </Box>
     </>
   )
