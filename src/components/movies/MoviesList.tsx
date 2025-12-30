@@ -1,5 +1,5 @@
 import useMovies from "@/hooks/use-movies"
-import { Box, Grid, GridItem, Heading, Text } from "@chakra-ui/react"
+import { Grid, GridItem, Heading, Text } from "@chakra-ui/react"
 import MovieCard from "./MovieCard"
 
 const MoviesList = () => {
@@ -16,7 +16,7 @@ const MoviesList = () => {
     if (movies) {
         return (
             <>
-                <Heading>Your movies</Heading>
+                <Heading mb={5}>Your movies</Heading>
                 <Grid display={'flex'} direction={'row'} gap={5}>
                     {movies.map(movie =>
                         <GridItem>
