@@ -2,7 +2,7 @@ export interface Movie {
     id: number
     imdb_id: string
     path: string
-    last_time_viewed: string
+    last_time_viewed: string | null
     mimetype: string
     start_year?: number
     aggregate_rating?: number
@@ -15,7 +15,7 @@ export interface Movie {
 export interface CreatedMovie {
     imdb_id: string
     path: string
-    last_time_viewed: string
+    last_time_viewed: string | null
     mimetype: string
     start_year?: number
     aggregate_rating?: number

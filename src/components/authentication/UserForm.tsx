@@ -97,14 +97,14 @@ const UserForm = () => {
                 </Listbox.Root>
 
                 <Button
-                colorPalette="teal"
-                type="submit"
-                loading={addUser.isPending}
-                loadingText="Loading"
-                spinnerPlacement="start"
-                
-                >
-                Submit
+                    colorPalette="teal"
+                    type="submit"
+                    loading={addUser.isPending}
+                    loadingText="Loading"
+                    spinnerPlacement="start"
+                    
+                    >
+                    Submit
                 </Button>
 
             </form>
