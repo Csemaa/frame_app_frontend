@@ -1,27 +1,14 @@
-import useMovies from "@/hooks/use-movies"
-import { Grid, GridItem, Heading, Text } from "@chakra-ui/react"
+import type { Movie } from "@/entities/Movie"
+import { GridItem, SimpleGrid, Text } from "@chakra-ui/react"
 import MovieCard from "./MovieCard"
-import useTaggedMovies from "@/hooks/use-tagged-movies"
-import useAuthStore from "@/store"
-import useTags from "@/hooks/use-tags"
 
-const MoviesList = () => {
-    const { user } = useAuthStore()
-    const { movies, error, isPending } = useMovies()
-    const { taggedMovies } = useTaggedMovies(user.id || 1)
+interface Props {
+    movies: Movie[] | undefined
+    error: Error | null
+    isPending: boolean
+}
 
-    const { userTags } = useTags(user.id || 1)
-
-    const favouriteTags = userTags?.filter(ut => ut.tag === 'favourite')
-    const favouriteMovieIds = favouriteTags?.map(ut => ut.movie_id)
-    const favouriteMovies = taggedMovies?.filter(movie => favouriteMovieIds?.includes(movie.id))
-
-
-    const watchLaterTags = userTags?.filter(ut => ut.tag === 'watch_later')
-    const watchLaterMovieIds = watchLaterTags?.map(ut => ut.movie_id)
-    const watchLaterMovies = taggedMovies?.filter(movie => watchLaterMovieIds?.includes(movie.id))
-
-
+const MoviesList = ({movies, error, isPending}: Props) => {
 
     if (error) {
         return <Text>Unexpected error: {error.message}</Text>
@@ -30,44 +17,19 @@ const MoviesList = () => {
         return <Text>Loading...</Text>
     }
 
-    if (movies && taggedMovies) {
+    if (movies) {
         return (
             <>
-                <Heading mb={5}>Your movies</Heading>
-                <Grid display={'flex'} direction={'row'} gap={5}>
-                    {movies.map(movie =>
-                        <GridItem>
+                <SimpleGrid
+                    columns={{ base: 8, sm: 2, md: 3, lg: 4, xl: 6 }}
+                    gapX={5}
+                >
+                    {movies.map(movie => (
+                        <GridItem key={movie.id}>
                             <MovieCard movie={movie} />
                         </GridItem>
-                    )}
-                </Grid>
-
-                <Heading mb={5}>tagged movies</Heading>
-                {<Grid display={'flex'} direction={'row'} gap={5}>
-                    {taggedMovies?.map(movie =>
-                        <GridItem>
-                            <MovieCard movie={movie} />
-                        </GridItem>
-                    )}
-                </Grid>}
-
-                <Heading mb={5}>fav movies</Heading>
-                {<Grid display={'flex'} direction={'row'} gap={5}>
-                    {favouriteMovies?.map(movie =>
-                        <GridItem>
-                            <MovieCard movie={movie} />
-                        </GridItem>
-                    )}
-                </Grid>}
-
-                <Heading mb={5}>wl movies</Heading>
-                {<Grid display={'flex'} direction={'row'} gap={5}>
-                    {watchLaterMovies?.map(movie =>
-                        <GridItem>
-                            <MovieCard movie={movie} />
-                        </GridItem>
-                    )}
-                </Grid>}
+                    ))}
+                </SimpleGrid>
             </>
         )
     }

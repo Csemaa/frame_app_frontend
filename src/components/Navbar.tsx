@@ -6,7 +6,7 @@ import { MdMovie } from "react-icons/md";
 const Navbar = () => {
     const { user } = useAuthStore()
     return (
-        <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.muted'} shadow={'xl'}>
+        <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.subtle'} shadow={'xl'}>
             <HStack>
                 <Icon size={'xl'}><MdMovie /></Icon>
                 <Heading size={'3xl'}>Frame</Heading>

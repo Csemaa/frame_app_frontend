@@ -5,6 +5,7 @@ import MovieDetailContainer from "./components/movies/MovieDetailContainer";
 import MovieForm from "./components/movies/MovieForm";
 import UserForm from "./components/authentication/UserForm";
 import App from "./App";
+import MovieContainer from "./components/movies/MovieContainer";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/movies',
-        element: <MoviesList />,
+        element: <MovieContainer />,
       },
       {
         path: '/movies/:id',
