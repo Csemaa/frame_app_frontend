@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/react"
-import UserCards from "./components/authentication/UserCards"
+import { Outlet } from "react-router-dom"
 import Navbar from "./components/Navbar"
-import MoviesList from "./components/movies/MoviesList"
 
 function App() {
 
@@ -9,8 +8,7 @@ function App() {
     <>
       <Navbar />
       <Box p={5}>
-        <UserCards />
-        <MoviesList />
+        <Outlet/>
       </Box>
     </>
   )

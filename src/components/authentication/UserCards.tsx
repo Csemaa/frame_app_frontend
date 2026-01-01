@@ -2,6 +2,7 @@ import useUsers from "@/hooks/use-users"
 import useAuthStore from "@/store"
 import { getAvatar } from "@/utils/get-avatar"
 import { Box, Card, Heading, Image, SkeletonCircle, SkeletonText, Text } from "@chakra-ui/react"
+import { Link } from "react-router-dom"
 
 
 const UserCards = () => {
@@ -39,19 +40,21 @@ const UserCards = () => {
       <Heading fontSize={'2rem'} my={5}>Select a user</Heading>
       <Box display={'flex'} alignItems={'center'} gap={4}>
         {users.map(user => (
-          <Card.Root key={user.id} width={'20rem'} onClick={() => login(user)}>
-            <Card.Body>
-              <Box display={'flex'} alignItems={'center'} gap={4}>
-                <Image
-                  src={(getAvatar(user.profile_picture))}
-                  alt="User avatar"
-                  boxSize="70px"
-                  borderRadius={'50%'}
-                />
-                <Card.Title>{user.nickname}</Card.Title>
-              </Box>
-            </Card.Body>
-          </Card.Root>
+          <Link to='/movies'>
+            <Card.Root key={user.id} width={'20rem'} onClick={() => login(user)}>
+              <Card.Body>
+                <Box display={'flex'} alignItems={'center'} gap={4}>
+                  <Image
+                    src={(getAvatar(user.profile_picture))}
+                    alt="User avatar"
+                    boxSize="70px"
+                    borderRadius={'50%'}
+                  />
+                  <Card.Title>{user.nickname}</Card.Title>
+                </Box>
+              </Card.Body>
+            </Card.Root>
+          </Link>
         ))}
       </Box>
     </Box>
