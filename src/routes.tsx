@@ -5,7 +5,7 @@ import UserForm from "./components/authentication/UserForm";
 import App from "./App";
 import MovieContainer from "./components/movies/MovieContainer";
 import UnAuthenticatedApp from "./UnAuthenticatedApp";
-import UserContainer from "./components/authentication/UserContainer";
+import UserCards from "./components/authentication/UserCards";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/users',
-        element: <UserContainer />,
+        element: <UserCards />,
       },
       {
         path: '/new_user',

@@ -3,9 +3,7 @@ import UserCards from "./UserCards"
 
 const UserContainer = () => {
     return (
-        <Box display={'flex'} justifyContent={'center'} minHeight={'90vh'} alignItems={'center'}>
-            <UserCards />
-        </Box>
+        <UserCards />
     )
 }
 
