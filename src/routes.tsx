@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom"
-import UserCards from "./components/authentication/UserCards";
 import MovieDetailContainer from "./components/movies/MovieDetailContainer";
 import MovieForm from "./components/movies/MovieForm";
 import UserForm from "./components/authentication/UserForm";
 import App from "./App";
 import MovieContainer from "./components/movies/MovieContainer";
 import UnAuthenticatedApp from "./UnAuthenticatedApp";
+import UserContainer from "./components/authentication/UserContainer";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/users',
-        element: <UserCards />,
+        element: <UserContainer />,
       },
       {
         path: '/new_user',

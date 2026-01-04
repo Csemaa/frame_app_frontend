@@ -33,8 +33,42 @@ const MovieContainer = () => {
 
     const watchLaterMovieIds = userTags?.filter(ut => ut.tag === 'watch_later').map(ut => ut.movie_id)
     const watchLaterMovies = taggedMovies?.filter(movie => watchLaterMovieIds?.includes(movie.id))
+    
+    const visibleMovies = useMemo(() => {
+        if (!movies) return undefined
 
+        let result = movies
 
+        switch (filter) {
+            case 'favourites':
+                result = favouriteMovies || []
+                break
+            case 'watch_later':
+                result = watchLaterMovies || []
+                break
+            default:
+                result = movies
+        }
+
+        if (!result) return result
+
+        const sorted = [...result]
+
+        switch (sort) {
+            case 'rating':
+                sorted.sort(
+                    (a, b) => (b.aggregate_rating ?? 0) - (a.aggregate_rating ?? 0)
+                )
+                break
+            case 'year':
+                sorted.sort(
+                    (a, b) => (b.start_year ?? 0) - (a.start_year ?? 0)
+                )
+                break
+        }
+
+        return sorted
+    }, [filter, sort, movies, favouriteMovies, watchLaterMovies])
 
 
     return (
