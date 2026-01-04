@@ -2,12 +2,12 @@ import type { ImdbMovie } from '@/entities/ImdbMovie'
 import type { CreatedMovie, Movie } from '@/entities/Movie'
 import useImdbSearchTitle from '@/hooks/use-imdb-search-title'
 import usePostMovie from '@/hooks/use-post-movie'
-import { Box, Button, Card, Field, Input, SimpleGrid, Image, Text, Heading, Grid, GridItem, Alert } from '@chakra-ui/react'
+import { Box, Button, Card, Field, Input, SimpleGrid, Image, Text, Heading, Grid, GridItem, Alert, HStack, Kbd } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import z from 'zod'
-import { Link as ChakraLink} from "@chakra-ui/react"
+import { Link as ChakraLink } from "@chakra-ui/react"
 import { Link } from 'react-router-dom'
 
 const schema = z.object({
@@ -64,21 +64,21 @@ const MovieForm = () => {
         >
             <GridItem area="movieform" p={4} bgColor={'bg.subtle'}>
                 <Box bgColor={'bg.subtle'} p={10} borderRadius={'20px'}>
-                    {postMovie.isSuccess && 
-                    <Alert.Root status="success" mb={4}>
-                        <Alert.Indicator />
-                        <Alert.Title>User added!
-                            <Link to='/movies'> Back to <ChakraLink variant="underline" colorPalette="teal">movies</ChakraLink>
-                            </Link>
-                        </Alert.Title>
-                    </Alert.Root>
-                }
-                {postMovie.isError && 
-                    <Alert.Root status="error" mb={4}>
-                        <Alert.Indicator />
-                        <Alert.Title>Failed to add user!</Alert.Title>
-                    </Alert.Root>
-                }
+                    {postMovie.isSuccess &&
+                        <Alert.Root status="success" mb={4}>
+                            <Alert.Indicator />
+                            <Alert.Title>User added!
+                                <Link to='/movies'> Back to <ChakraLink variant="underline" colorPalette="teal">movies</ChakraLink>
+                                </Link>
+                            </Alert.Title>
+                        </Alert.Root>
+                    }
+                    {postMovie.isError &&
+                        <Alert.Root status="error" mb={4}>
+                            <Alert.Indicator />
+                            <Alert.Title>Failed to add user!</Alert.Title>
+                        </Alert.Root>
+                    }
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Field.Root mb={6}>
                             <Field.Label>
@@ -86,6 +86,13 @@ const MovieForm = () => {
                             </Field.Label>
                             <Input placeholder="Path" {...register("path")} variant="subtle" size={'lg'} />
                             {errors.path && <Field.ErrorText>{errors.path.message}</Field.ErrorText>}
+                            <Field.HelperText my={2}>
+                                <HStack gap="1" mb={1}>
+                                    <Text textStyle="sm">Tip: Use</Text>
+                                    <Kbd>Ctrl</Kbd>+<Kbd>Shift</Kbd>+<Kbd>C</Kbd>
+                                </HStack>
+                                <Text textStyle="sm">to get the path of your file in your file explorer</Text>
+                            </Field.HelperText>
                         </Field.Root>
 
                         <Field.Root mb={6}>
@@ -125,7 +132,7 @@ const MovieForm = () => {
                         <Card.Root maxW={230}
                             onClick={() => setSelectedMovie(title)}
                             cursor={'pointer'}>
-                            <Image src={title.primaryImage?.url} objectFit={'fill'} minH={'410px'} />
+                            <Image src={title.primaryImage?.url} objectFit={'cover'} minH={'410px'} />
                             <Card.Body gap={3}>
                                 <Card.Title
                                     lineHeight={'1.3rem'}

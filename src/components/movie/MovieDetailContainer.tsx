@@ -1,7 +1,7 @@
 import useImdbMovie from '@/hooks/use-imdb-movie'
 import useMovie from '@/hooks/use-movie'
-import { Box, Heading, Icon, Image, Text, VStack, HStack, Blockquote, Button, Avatar } from '@chakra-ui/react'
-import { useParams } from 'react-router-dom'
+import { Box, Heading, Icon, Image, Text, VStack, HStack, Blockquote, Button, Avatar, Separator } from '@chakra-ui/react'
+import { Link, useParams } from 'react-router-dom'
 import { FaStar } from "react-icons/fa";
 import { MdCalendarMonth } from "react-icons/md";
 import { FaPlayCircle } from "react-icons/fa";
@@ -21,10 +21,12 @@ const MovieDetailContainer = () => {
   return (
     <>
       <Box m={10} mx={20}>
-        <Box display={'flex'} gap={12}>
+        <Box display={'flex'} gap={12} bgColor={'bg.muted'} p={3} borderRadius={'5px'}>
           <Image src={imdbMovie.primaryImage.url} maxWidth={'400px'} borderRadius={'5px'} />
           <Box>
             <Heading size={'6xl'} mb={3}>{imdbMovie.primaryTitle}</Heading>
+            <Separator mb={3}/>
+
             <HStack mb={3}>
               <Icon><FaStar /></Icon>
               <Text color={'yellow.contrast'} bgColor={'yellow.focusRing'} borderRadius={'4px'} px={2}>{imdbMovie.rating?.aggregateRating}</Text>
@@ -39,6 +41,7 @@ const MovieDetailContainer = () => {
                 {imdbMovie.plot}
               </Blockquote.Content>
             </Blockquote.Root>
+            <Separator mb={3}/>
             {imdbMovie.stars &&
               <Box mb={8}>
                 <Heading size={'md'} mb={5}>Stars</Heading>
@@ -50,7 +53,7 @@ const MovieDetailContainer = () => {
                       alignItems={'center'}>
                       <Avatar.Root size={'lg'} key={star.id}>
                         <Avatar.Fallback name={star.displayName} />
-                        <Avatar.Image src={star.primaryImage.url}/>
+                        <Avatar.Image src={star.primaryImage?.url} />
                       </Avatar.Root>
                       <Text color={'fg.muted'} textStyle={'sm'}>{star.displayName}</Text>
                     </Box>
@@ -69,7 +72,7 @@ const MovieDetailContainer = () => {
                       alignItems={'center'}>
                       <Avatar.Root size={'lg'} key={star.id}>
                         <Avatar.Fallback name={star.displayName} />
-                        <Avatar.Image src={star.primaryImage.url}/>
+                        <Avatar.Image src={star.primaryImage?.url} />
                       </Avatar.Root>
                       <Text color={'fg.muted'} textStyle={'sm'}>{star.displayName}</Text>
                     </Box>
@@ -77,9 +80,13 @@ const MovieDetailContainer = () => {
                 </HStack>
               </Box>
             }
-            <Button colorPalette="red" variant="solid" size={'xl'}>
-              <FaPlayCircle /> Start playing
-            </Button>
+            <Box display={'flex'} gap={5}>
+              <Link to={`/play/${movie?.id}`}>
+              <Button colorPalette="red" variant="solid" size={'xl'}>
+                <FaPlayCircle /> Start playing
+              </Button>
+              </Link>
+            </Box>
           </Box>
         </Box>
       </Box>

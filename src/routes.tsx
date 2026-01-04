@@ -6,6 +6,7 @@ import App from "./App";
 import MovieContainer from "./components/movies/MoviesContainer";
 import UnAuthenticatedApp from "./UnAuthenticatedApp";
 import UserCards from "./components/authentication/UserCards";
+import MoviePlayer from "./components/movie/MoviePlayer";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
       {
         path: '/new_movie',
         element: <MovieForm />,
-      }
+      },
+      {
+        path: '/play/:id',
+        element: <MoviePlayer />,
+      },
     ]
   },
 ])
