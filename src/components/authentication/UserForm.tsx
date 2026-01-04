@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import usePostUser from "@/hooks/use-post-user"
-import type { CreatedUser } from "@/entities/User"
+import type { CreatedUser, User } from "@/entities/User"
 import { Field, Input, Listbox, createListCollection, Image, Button, Box, Alert } from "@chakra-ui/react"
 import { getAvatar } from "@/utils/get-avatar"
 import { Link } from "react-router-dom"
 import { Link as ChakraLink} from "@chakra-ui/react"
+import useAuthStore from "@/store"
 
 const profilePictureCollections = createListCollection({
     items: [
@@ -44,8 +45,8 @@ const UserForm = () => {
         resolver: zodResolver(schema),
         defaultValues: {
             email: null,
-            nickname: "",
-            profile_picture: "1",
+            nickname: '',
+            profile_picture: '1',
         },
     })
 
