@@ -15,4 +15,4 @@ const useAuthStore = create<AuthStore>(set => ({
     logout: () => set(() => ({user: defaultUser}))
 }))
 
-export default useAuthStore;
+export default useAuthStore

@@ -2,12 +2,11 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import usePostUser from "@/hooks/use-post-user"
-import type { CreatedUser, User } from "@/entities/User"
+import type { CreatedUser } from "@/entities/User"
 import { Field, Input, Listbox, createListCollection, Image, Button, Box, Alert } from "@chakra-ui/react"
 import { getAvatar } from "@/utils/get-avatar"
 import { Link } from "react-router-dom"
 import { Link as ChakraLink} from "@chakra-ui/react"
-import useAuthStore from "@/store"
 
 const profilePictureCollections = createListCollection({
     items: [
@@ -69,7 +68,7 @@ const UserForm = () => {
                     <Alert.Root status="success" mb={4}>
                         <Alert.Indicator />
                         <Alert.Title>User added!
-                            <Link to='/users'>Back to <ChakraLink variant="underline" colorPalette="teal">users</ChakraLink>
+                            <Link to='/users'> Back to <ChakraLink variant="underline" colorPalette="teal">users</ChakraLink>
                             </Link>
                         </Alert.Title>
                     </Alert.Root>

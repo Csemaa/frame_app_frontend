@@ -1,13 +1,20 @@
-import { Box, createListCollection, Grid, GridItem, Heading, HStack, Icon, MenuItem, Portal, Select, Separator, VStack } from '@chakra-ui/react'
-import MoviesList from './MoviesList'
-import { PiVideoCameraFill } from "react-icons/pi";
-import { IoIosHeart } from 'react-icons/io';
-import { IoEyeSharp } from 'react-icons/io5';
-import useAuthStore from '@/store';
 import useMovies from '@/hooks/use-movies';
 import useTaggedMovies from '@/hooks/use-tagged-movies';
 import useTags from '@/hooks/use-tags';
+import useAuthStore from '@/store';
+import { Box, createListCollection, Grid, GridItem, Heading, HStack, Icon, Input, InputGroup, Portal, Select, Separator, VStack } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
+import { BsSortNumericDown, BsSortNumericUp } from "react-icons/bs";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { GrUnsorted } from "react-icons/gr";
+import { IoIosHeart } from 'react-icons/io';
+import { IoEyeSharp } from 'react-icons/io5';
+import { LuCalendarArrowDown, LuCalendarArrowUp } from "react-icons/lu";
+import { PiVideoCameraFill } from "react-icons/pi";
+import MoviesList from './MoviesList';
+import { IoAddCircleSharp } from "react-icons/io5";
+import { Link } from 'react-router-dom';
+
 
 const MovieContainer = () => {
     const { user } = useAuthStore()
@@ -15,25 +22,26 @@ const MovieContainer = () => {
     const { taggedMovies } = useTaggedMovies(user.id)
     const { userTags } = useTags(user.id)
 
-    type Filter = 'all' | 'favourites' | 'watch_later'
-    const [filter, setFilter] = useState<Filter>('all')
+    const [filter, setFilter] = useState('all')
+    const [sort, setSort] = useState('none')
+    const [searchString, setSearchString] = useState('')
 
     const sortCollection = createListCollection({
         items: [
-            { label: "Default", value: "none" },
-            { label: "By rating", value: "rating" },
-            { label: "Release date", value: "year" },
+            { label: "Default", value: "none", icon: <GrUnsorted /> },
+            { label: "Rating", value: "rating", icon: <BsSortNumericDown /> },
+            { label: "Rating (descending)", value: "rating_desc", icon: <BsSortNumericUp /> },
+            { label: "Release date", value: "year", icon: <LuCalendarArrowUp /> },
+            { label: "Release date (descending)", value: "year_desc", icon: <LuCalendarArrowDown /> },
         ],
     })
-    const [sort, setSort] = useState('none')
-
 
     const favouriteMovieIds = userTags?.filter(ut => ut.tag === 'favourite').map(ut => ut.movie_id)
     const favouriteMovies = taggedMovies?.filter(movie => favouriteMovieIds?.includes(movie.id))
 
     const watchLaterMovieIds = userTags?.filter(ut => ut.tag === 'watch_later').map(ut => ut.movie_id)
     const watchLaterMovies = taggedMovies?.filter(movie => watchLaterMovieIds?.includes(movie.id))
-    
+
     const visibleMovies = useMemo(() => {
         if (!movies) return undefined
 
@@ -50,25 +58,40 @@ const MovieContainer = () => {
                 result = movies
         }
 
-        if (!result) return result
-
-        const sorted = [...result]
-
         switch (sort) {
-            case 'rating':
-                sorted.sort(
+            case 'none':
+                result.sort(
+                    (a, b) => (b.id ?? 0) - (a.id ?? 0)
+                ).reverse()
+                break
+            case 'rating_desc':
+                result.sort(
                     (a, b) => (b.aggregate_rating ?? 0) - (a.aggregate_rating ?? 0)
                 )
                 break
-            case 'year':
-                sorted.sort(
+            case 'rating':
+                result.sort(
+                    (a, b) => (b.aggregate_rating ?? 0) - (a.aggregate_rating ?? 0)
+                ).reverse()
+                break
+            case 'year_desc':
+                result.sort(
                     (a, b) => (b.start_year ?? 0) - (a.start_year ?? 0)
                 )
                 break
+            case 'year':
+                result.sort(
+                    (a, b) => (b.start_year ?? 0) - (a.start_year ?? 0)
+                ).reverse()
+                break
         }
 
-        return sorted
-    }, [filter, sort, movies, favouriteMovies, watchLaterMovies])
+        if (searchString) {
+            result = result.filter(movie => movie.primary_title?.includes(searchString))
+        }
+
+        return result
+    }, [filter, sort, searchString, movies, favouriteMovies, watchLaterMovies])
 
 
     return (
@@ -104,42 +127,51 @@ const MovieContainer = () => {
                     </HStack>
 
                     <Separator />
-                    <HStack gapX={6}>
-                        <Icon><PiVideoCameraFill size={24} /></Icon>
-                        <Heading>Add a movie</Heading>
-                    </HStack>
+                    <Link to={'/new_movie'}>
+                        <HStack gapX={6}>
+                            <Icon><IoAddCircleSharp size={24} /></Icon>
+                            <Heading>Add a movie</Heading>
+                        </HStack>
+                    </Link>
                 </VStack>
             </GridItem>
 
-            <GridItem area="main" p={6} overflowX="hidden" display={'flex'} justifyContent={'center'}>
-                <Heading size="sm" mb={2}>
-                    Sort movies
-                </Heading>
-                <Select.Root collection={sortCollection} size="sm" width="320px">
-                    <Select.HiddenSelect />
-                    <Select.Label>Sort by</Select.Label>
-                    <Select.Control>
-                        <Select.Trigger>
-                            <Select.ValueText placeholder="Sort by" />
-                        </Select.Trigger>
-                        <Select.IndicatorGroup>
-                            <Select.Indicator />
-                        </Select.IndicatorGroup>
-                    </Select.Control>
-                    <Portal>
-                        <Select.Positioner>
-                            <Select.Content>
-                                {sortCollection.items.map((sortOption) => (
-                                    <Select.Item item={sortOption} key={sortOption.value} onClick={() => setSort(sortOption.value)}>
-                                        {sortOption.label}
-                                        <Select.ItemIndicator />
-                                    </Select.Item>
-                                ))}
-                            </Select.Content>
-                        </Select.Positioner>
-                    </Portal>
-                </Select.Root>
-                <MoviesList movies={visibleMovies} error={error} isPending={isPending} />
+            <GridItem area="main" p={6} overflowX="hidden" mx={'auto'}>
+                <Heading size={'2xl'} mb={6}>Your movies</Heading>
+                <Box mb={8} display={'flex'}>
+                    <InputGroup startElement={<FaMagnifyingGlass />} >
+                        <Input placeholder="Search for title" size={'xl'} width="40rem" onChange={(event) => setSearchString(event.target.value)} />
+                    </InputGroup>
+                    <Select.Root collection={sortCollection} size="lg" width="20rem">
+                        <Select.HiddenSelect />
+                        <Select.Control>
+                            <Select.Trigger>
+                                <Select.ValueText placeholder="Sort by" />
+                            </Select.Trigger>
+                            <Select.IndicatorGroup>
+                                <Select.Indicator />
+                            </Select.IndicatorGroup>
+                        </Select.Control>
+                        <Portal>
+                            <Select.Positioner>
+                                <Select.Content>
+                                    {sortCollection.items.map((sortOption) => (
+                                        <Select.Item item={sortOption} key={sortOption.value} onClick={() => setSort(sortOption.value)}>
+                                            <HStack>
+                                                {sortOption.icon}
+                                                {sortOption.label}
+                                            </HStack>
+                                            <Select.ItemIndicator />
+                                        </Select.Item>
+                                    ))}
+                                </Select.Content>
+                            </Select.Positioner>
+                        </Portal>
+                    </Select.Root>
+                </Box>
+                <Box display={'flex'} justifyContent={'center'}>
+                    <MoviesList movies={visibleMovies} error={error} isPending={isPending} />
+                </Box>
             </GridItem>
         </Grid>
     )
