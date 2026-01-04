@@ -32,7 +32,7 @@ const MovieForm = () => {
         console.log(data)
         if (selectedMovie) {
             const newMovie: CreatedMovie = {
-                path: data.path.replace('/"', ''),
+                path: data.path.replaceAll('"', ''),
                 mimetype: 'video/mp4', //TODO
                 last_time_viewed: null,
                 imdb_id: selectedMovie?.id,
