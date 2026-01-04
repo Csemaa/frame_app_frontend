@@ -1,5 +1,5 @@
 import type { Movie } from "@/entities/Movie"
-import { GridItem, SimpleGrid, Skeleton, SkeletonText, Text } from "@chakra-ui/react"
+import { Box, GridItem, SimpleGrid, Skeleton, SkeletonText, Text } from "@chakra-ui/react"
 import MovieCard from "./MovieCard"
 
 interface Props {
@@ -31,8 +31,13 @@ const MoviesList = ({ movies, error, isPending }: Props) => {
     }
 
     if (movies && movies.length == 0) {
-        return <Text>You dont have any movies here</Text>
+        return (
+            <Box display={'flex'} minH={'80vh'} alignItems={'center'}>
+                <Text fontSize={'xl'}>{':('} You dont have any movies here</Text>
+            </Box>
+        )
     }
+
 
     if (movies) {
         return (

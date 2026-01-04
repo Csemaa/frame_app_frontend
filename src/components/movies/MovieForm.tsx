@@ -1,14 +1,13 @@
 import type { ImdbMovie } from '@/entities/ImdbMovie'
-import type { CreatedMovie, Movie } from '@/entities/Movie'
+import type { CreatedMovie } from '@/entities/Movie'
 import useImdbSearchTitle from '@/hooks/use-imdb-search-title'
 import usePostMovie from '@/hooks/use-post-movie'
-import { Box, Button, Card, Field, Input, SimpleGrid, Image, Text, Heading, Grid, GridItem, Alert, HStack, Kbd } from '@chakra-ui/react'
+import { Alert, Box, Button, Card, Link as ChakraLink, Field, Grid, GridItem, HStack, Image, Input, Kbd, SimpleGrid, Text } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import z from 'zod'
-import { Link as ChakraLink } from "@chakra-ui/react"
 import { Link } from 'react-router-dom'
+import z from 'zod'
 
 const schema = z.object({
     path: z.string(),
@@ -27,7 +26,7 @@ const MovieForm = () => {
 
     const postMovie = usePostMovie()
 
-    const { titles, error, isPending } = useImdbSearchTitle(searchString)
+    const { titles, error } = useImdbSearchTitle(searchString)
 
     const onSubmit = (data: FormData) => {
         console.log(data)
@@ -124,7 +123,7 @@ const MovieForm = () => {
             <GridItem area="main" p={4} overflowX="hidden" mx={'auto'}>
                 {error && <Text color={'red.400'}>Couldnt load titles: {error.message}</Text>}
                 <SimpleGrid
-                    columns={{ base: 0, sm: 2, md: 2, lg: 4, xl: 6 }}
+                    columns={{ base: 1, sm: 2, md: 2, lg: 4, xl: 6 }}
                     gap={5}
                     mt={10}
                 >

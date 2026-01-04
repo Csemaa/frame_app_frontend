@@ -1,16 +1,15 @@
-import useImdbMovie from '@/hooks/use-imdb-movie'
-import useMovie from '@/hooks/use-movie'
-import { Box, Heading, Icon, Image, Text, VStack, HStack, Blockquote, Button, Avatar, Separator } from '@chakra-ui/react'
-import { Link, useParams } from 'react-router-dom'
-import { FaStar } from "react-icons/fa";
+import useImdbMovie from '@/hooks/use-imdb-movie';
+import useMovie from '@/hooks/use-movie';
+import { Avatar, Blockquote, Box, Button, Heading, HStack, Icon, Image, Separator, Text } from '@chakra-ui/react';
+import { FaPlayCircle, FaStar } from "react-icons/fa";
 import { MdCalendarMonth } from "react-icons/md";
-import { FaPlayCircle } from "react-icons/fa";
+import { Link, useParams } from 'react-router-dom';
 
 const MovieDetailContainer = () => {
   const { id } = useParams()
   const movieId = id ? parseInt(id) : undefined
 
-  const { movie, error, isPending } = useMovie(movieId)
+  const { movie } = useMovie(movieId)
   const { imdbMovie } = useImdbMovie(movie?.imdb_id || '')
 
 
