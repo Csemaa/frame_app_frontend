@@ -1,4 +1,4 @@
-import { Box, Grid, GridItem, Heading, HStack, Icon, MenuItem, Separator, VStack } from '@chakra-ui/react'
+import { Box, createListCollection, Grid, GridItem, Heading, HStack, Icon, MenuItem, Portal, Select, Separator, VStack } from '@chakra-ui/react'
 import MoviesList from './MoviesList'
 import { PiVideoCameraFill } from "react-icons/pi";
 import { IoIosHeart } from 'react-icons/io';
@@ -7,8 +7,7 @@ import useAuthStore from '@/store';
 import useMovies from '@/hooks/use-movies';
 import useTaggedMovies from '@/hooks/use-tagged-movies';
 import useTags from '@/hooks/use-tags';
-import { useState } from 'react';
-import type { Movie } from '@/entities/Movie';
+import { useMemo, useState } from 'react';
 
 const MovieContainer = () => {
     const { user } = useAuthStore()
@@ -16,13 +15,27 @@ const MovieContainer = () => {
     const { taggedMovies } = useTaggedMovies(user.id)
     const { userTags } = useTags(user.id)
 
-    const [visibleMovies, setVisibleMovies] = useState<Movie[] | undefined>(movies)
+    type Filter = 'all' | 'favourites' | 'watch_later'
+    const [filter, setFilter] = useState<Filter>('all')
+
+    const sortCollection = createListCollection({
+        items: [
+            { label: "Default", value: "none" },
+            { label: "By rating", value: "rating" },
+            { label: "Release date", value: "year" },
+        ],
+    })
+    const [sort, setSort] = useState('none')
+
 
     const favouriteMovieIds = userTags?.filter(ut => ut.tag === 'favourite').map(ut => ut.movie_id)
     const favouriteMovies = taggedMovies?.filter(movie => favouriteMovieIds?.includes(movie.id))
 
     const watchLaterMovieIds = userTags?.filter(ut => ut.tag === 'watch_later').map(ut => ut.movie_id)
     const watchLaterMovies = taggedMovies?.filter(movie => watchLaterMovieIds?.includes(movie.id))
+
+
+
 
     return (
         <Grid
@@ -41,18 +54,21 @@ const MovieContainer = () => {
                 <VStack align="stretch" gap={6} pl={6}>
                     <Heading py={2}>Welcome, {user.nickname}!</Heading>
                     <Separator />
-                    <HStack gapX={6} onClick={() => setVisibleMovies(movies)}>
+                    <HStack gapX={6} onClick={() => setFilter('all')}>
                         <Icon><PiVideoCameraFill size={24} /></Icon>
-                        <Heading cursor={'pointer'}>Your movies</Heading>
+                        <Heading cursor="pointer">Your movies</Heading>
                     </HStack>
-                    <HStack gapX={6} onClick={() => setVisibleMovies(favouriteMovies)}>
+
+                    <HStack gapX={6} onClick={() => setFilter('favourites')}>
                         <Icon><IoIosHeart size={24} /></Icon>
-                        <Heading cursor={'pointer'}>Favourites</Heading>
+                        <Heading cursor="pointer">Favourites</Heading>
                     </HStack>
-                    <HStack gapX={6} onClick={() => setVisibleMovies(watchLaterMovies)}>
+
+                    <HStack gapX={6} onClick={() => setFilter('watch_later')}>
                         <Icon><IoEyeSharp size={24} /></Icon>
-                        <Heading cursor={'pointer'}>Watch later</Heading>
+                        <Heading cursor="pointer">Watch later</Heading>
                     </HStack>
+
                     <Separator />
                     <HStack gapX={6}>
                         <Icon><PiVideoCameraFill size={24} /></Icon>
@@ -62,6 +78,33 @@ const MovieContainer = () => {
             </GridItem>
 
             <GridItem area="main" p={6} overflowX="hidden" display={'flex'} justifyContent={'center'}>
+                <Heading size="sm" mb={2}>
+                    Sort movies
+                </Heading>
+                <Select.Root collection={sortCollection} size="sm" width="320px">
+                    <Select.HiddenSelect />
+                    <Select.Label>Sort by</Select.Label>
+                    <Select.Control>
+                        <Select.Trigger>
+                            <Select.ValueText placeholder="Sort by" />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                            <Select.Indicator />
+                        </Select.IndicatorGroup>
+                    </Select.Control>
+                    <Portal>
+                        <Select.Positioner>
+                            <Select.Content>
+                                {sortCollection.items.map((sortOption) => (
+                                    <Select.Item item={sortOption} key={sortOption.value} onClick={() => setSort(sortOption.value)}>
+                                        {sortOption.label}
+                                        <Select.ItemIndicator />
+                                    </Select.Item>
+                                ))}
+                            </Select.Content>
+                        </Select.Positioner>
+                    </Portal>
+                </Select.Root>
                 <MoviesList movies={visibleMovies} error={error} isPending={isPending} />
             </GridItem>
         </Grid>
