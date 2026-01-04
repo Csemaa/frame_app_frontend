@@ -8,13 +8,61 @@ export interface ImdbMovie {
     rating?: ImdbRating
 }
 
-export interface ImdbPrimaryImage {
+interface ImdbPrimaryImage {
     url: string
     height: number
     width: number
 }
 
-export interface ImdbRating {
+interface ImdbRating {
     aggregateRating: number
     voteCount: number
+}
+
+export interface FullImdbMovie extends ImdbMovie {
+    plot: string
+    directors: Director[]
+    writers: Writer[]
+    stars: Star[]
+    originCountries: Country[]
+    spokenLanguages: SpokenLanguage[]
+    interests: Genre[]
+}
+
+
+interface Director {
+    id: string
+    displayName: string
+    primaryImage: ImdbPrimaryImage
+    primaryProfessions: string[]
+}
+
+interface Writer {
+    id: string
+    displayName: string
+    primaryImage: ImdbPrimaryImage
+    primaryProfessions: string[]
+}
+
+interface Star {
+    id: string
+    displayName: string
+    primaryImage: ImdbPrimaryImage
+    primaryProfessions: string[]
+}
+
+interface Country {
+    code: string
+    name: string
+}
+
+interface SpokenLanguage {
+    code: string
+    name: string
+}
+
+interface Genre {
+    id: string
+    name: string
+    isSubGenre?: boolean | null
 }

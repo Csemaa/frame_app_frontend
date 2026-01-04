@@ -11,7 +11,7 @@ import { IoIosHeart } from 'react-icons/io';
 import { IoEyeSharp } from 'react-icons/io5';
 import { LuCalendarArrowDown, LuCalendarArrowUp } from "react-icons/lu";
 import { PiVideoCameraFill } from "react-icons/pi";
-import MoviesList from './MoviesList';
+import MoviesList from './MoviesCardContainer';
 import { IoAddCircleSharp } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 

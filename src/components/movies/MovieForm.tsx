@@ -117,7 +117,7 @@ const MovieForm = () => {
             <GridItem area="main" p={4} overflowX="hidden" mx={'auto'}>
                 {error && <Text color={'red.400'}>Couldnt load titles: {error.message}</Text>}
                 <SimpleGrid
-                    columns={{ base: 0, sm: 2, md: 2, lg: 4, xl: 7 }}
+                    columns={{ base: 0, sm: 2, md: 2, lg: 4, xl: 6 }}
                     gap={5}
                     mt={10}
                 >

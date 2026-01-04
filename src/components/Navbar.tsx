@@ -5,7 +5,7 @@ import { MdMovie } from "react-icons/md";
 import { IoIosPerson } from "react-icons/io";
 import { TbLogout } from "react-icons/tb";
 import useDeleteUser from '@/hooks/use-delete-user';
-import { toaster } from "@/components/ui/toaster"
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const { user, logout } = useAuthStore()
@@ -13,10 +13,12 @@ const Navbar = () => {
 
     return (
         <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.subtle'}>
-            <HStack>
-                <Icon size={'xl'}><MdMovie /></Icon>
-                <Heading size={'3xl'}>Frame</Heading>
-            </HStack>
+            <Link to='/movies'>
+                <HStack>
+                    <Icon size={'xl'}><MdMovie /></Icon>
+                    <Heading size={'3xl'}>Frame</Heading>
+                </HStack>
+            </Link>
             {user.id &&
                 <Dialog.Root
                     placement={'center'}
