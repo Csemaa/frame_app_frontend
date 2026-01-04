@@ -87,7 +87,7 @@ const MovieContainer = () => {
         }
 
         if (searchString) {
-            result = result.filter(movie => movie.primary_title?.includes(searchString))
+            result = result.filter(movie => movie.primary_title?.toLowerCase()?.includes(searchString.toLowerCase()))
         }
 
         return result
@@ -102,12 +102,13 @@ const MovieContainer = () => {
             }}
             templateColumns={{
                 base: "1fr",
-                md: "180px 1fr",
+                sm: "1 fr",
+                md: "240px 1fr",
                 lg: "360px 1fr",
             }}
             minH="100vh"
         >
-            <GridItem area="aside" p={4} bgColor={'bg.subtle'}>
+            <GridItem area="aside" p={4}>
                 <VStack align="stretch" gap={6} pl={6}>
                     <Heading py={2}>Welcome, {user.nickname}!</Heading>
                     <Separator />
@@ -136,9 +137,20 @@ const MovieContainer = () => {
                 </VStack>
             </GridItem>
 
-            <GridItem area="main" p={6} overflowX="hidden" mx={'auto'}>
+            <GridItem area="main"
+                p={6}
+                overflowX="hidden"
+                display={'flex'}
+                flexDirection={'column'}
+                >
                 <Heading size={'2xl'} mb={6}>Your movies</Heading>
-                <Box mb={8} display={'flex'}>
+                <Box
+                    mb={8}
+                    display={'flex'}
+                    justifyContent={'center'}
+                    gap={10}
+                    flexWrap={{ base: "wrap", lg: "nowrap" }}
+                    >
                     <InputGroup startElement={<FaMagnifyingGlass />} >
                         <Input placeholder="Search for title" size={'xl'} width="40rem" onChange={(event) => setSearchString(event.target.value)} />
                     </InputGroup>

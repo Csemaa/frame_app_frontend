@@ -10,7 +10,8 @@ const useImdbSearchTitle = (query: string) => {
     const fetchFoundTitles = () => apiClient.get<ImdbBaseResponse>('/search/titles', { params: { query, limit: 10 } }).then(res => res.data.titles)
     const { data: titles, error, isPending } = useQuery({
         queryKey: ['foundTitles', query],
-        queryFn: fetchFoundTitles
+        queryFn: fetchFoundTitles,
+        enabled: query.trim().length > 0,
     })
 
     return { titles, error, isPending }

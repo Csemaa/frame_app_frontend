@@ -11,20 +11,13 @@ const Navbar = () => {
     const { user, logout } = useAuthStore()
     const deleteUser = useDeleteUser()
 
-    const createSuccesToaster = () => {
-        return toaster.create({
-            description: "Account deleted",
-            type: "success",
-            closable: true,
-        })
-    }
     return (
-        <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.subtle'} shadow={'xl'}>
+        <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.subtle'}>
             <HStack>
                 <Icon size={'xl'}><MdMovie /></Icon>
                 <Heading size={'3xl'}>Frame</Heading>
             </HStack>
-            {user &&
+            {user.id &&
                 <Dialog.Root
                     placement={'center'}
                     motionPreset="slide-in-bottom"

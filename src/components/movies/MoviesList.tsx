@@ -38,7 +38,7 @@ const MoviesList = ({ movies, error, isPending }: Props) => {
         return (
             <>
                 <SimpleGrid
-                    columns={{ base: 8, sm: 2, md: 3, lg: 4, xl: 6 }}
+                    columns={{ base: 1, sm: 2, md: 3, lg: 4, xl: 6 }}
                     gap={5}
                 >
                     {movies.map(movie => (
