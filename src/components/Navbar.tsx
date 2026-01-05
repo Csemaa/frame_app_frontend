@@ -2,7 +2,6 @@ import useAuthStore from '@/store'
 import { getAvatar } from '@/utils/get-avatar';
 import { Avatar, Box, Button, CloseButton, Dialog, Heading, HStack, Icon, Menu, Portal, Separator, Text } from '@chakra-ui/react'
 import { MdMovie } from "react-icons/md";
-import { IoIosPerson } from "react-icons/io";
 import { TbLogout } from "react-icons/tb";
 import useDeleteUser from '@/hooks/use-delete-user';
 import { Link } from 'react-router-dom';
@@ -34,7 +33,6 @@ const Navbar = () => {
                         <Portal>
                             <Menu.Positioner>
                                 <Menu.Content>
-                                    <Menu.Item value="account"><IoIosPerson /> Edit account</Menu.Item>
                                     <Menu.Item value="logout" onClick={() => logout()}><TbLogout /> Log out</Menu.Item>
                                     <Dialog.Trigger asChild>
                                         <Menu.Item value="delete" color={'red.500'}><TbLogout /> Delete account</Menu.Item></Dialog.Trigger>

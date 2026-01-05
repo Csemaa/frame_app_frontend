@@ -182,7 +182,7 @@ const MovieContainer = () => {
                     </Select.Root>
                 </Box>
                 <Box display={'flex'} justifyContent={'center'}>
-                    <MoviesList movies={visibleMovies} error={error} isPending={isPending} />
+                    <MoviesList movies={visibleMovies} error={error} isPending={isPending}/>
                 </Box>
             </GridItem>
         </Grid>

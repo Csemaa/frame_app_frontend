@@ -14,7 +14,7 @@ interface Props {
 
 const FavouriteIcon = ({ movie }: Props) => {
     const { user } = useAuthStore()
-    const { userTags } = useTags(user.id)
+    const { userTags } = useTags(user.id) // Not the best solution, that for every item I requery it, TODO
 
     const usePostTag = useTagMovie(user.id)
     const removeTag = useRemoveTagMovie()
