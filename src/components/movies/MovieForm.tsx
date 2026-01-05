@@ -67,7 +67,7 @@ const MovieForm = () => {
                         <Alert.Root status="success" mb={4}>
                             <Alert.Indicator />
                             <Alert.Title>User added!
-                                <Link to='/movies'> Back to <ChakraLink variant="underline" colorPalette="teal">movies</ChakraLink>
+                                <Link to='/'> Back to <ChakraLink variant="underline" colorPalette="teal">movies</ChakraLink>
                                 </Link>
                             </Alert.Title>
                         </Alert.Root>

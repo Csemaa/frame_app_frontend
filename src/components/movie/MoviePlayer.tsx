@@ -1,6 +1,10 @@
 import useImdbMovie from '@/hooks/use-imdb-movie'
 import useMovie from '@/hooks/use-movie'
+import { API_BASE_URL } from '@/services/constants'
+import { Blockquote, Box, Heading, HStack } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
+import FavouriteIcon from '../tagging/FavouriteIcon'
+import WatchLaterIcon from '../tagging/WatchLaterIcon'
 
 const MoviePlayer = () => {
   const { id } = useParams()
@@ -10,19 +14,38 @@ const MoviePlayer = () => {
   const { imdbMovie } = useImdbMovie(movie?.imdb_id || '')
 
 
-  if (!imdbMovie) {
+  if (!imdbMovie || !movie) {
     return null
   }
 
   return (
-    <div>
-        <video controls>
-            <source
-            src={`http://127.0.0.1:5000/api/movies/${movie?.id}/stream`}
-            type="video/mp4"
-            />
-      </video>
-    </div>
+    <Box display="flex" justifyContent="center" mt={8}>
+      <Box maxW="1800px" p={5} bgColor={'bg.subtle'} borderRadius={10}>
+        <video controls style={{ width: "100%" }}>
+          <source
+            src={`${API_BASE_URL}/movies/${movie.id}/stream`}
+            type={movie.mimetype}
+          />
+        </video>
+        <Box mt={5}>
+          <Box display={'flex'} justifyContent={'space-between'} p={4}>
+            <Heading size="2xl" mb={3} >
+              {movie.primary_title}
+            </Heading>
+            <HStack>
+                <FavouriteIcon movie={movie}/>
+                <WatchLaterIcon movie={movie}/>
+            </HStack>
+          </Box>
+          <Blockquote.Root mb={8}>
+            <Blockquote.Content>
+              {imdbMovie.plot}
+            </Blockquote.Content>
+          </Blockquote.Root>
+        </Box>
+      </Box>
+    </Box>
+
   )
 }
 

@@ -13,7 +13,7 @@ const Navbar = () => {
 
     return (
         <Box py={3} px={5} display={'flex'} justifyContent={'space-between'} bgColor={'bg.subtle'}>
-            <Link to='/movies'>
+            <Link to='/'>
                 <HStack>
                     <Icon size={'xl'}><MdMovie /></Icon>
                     <Heading size={'3xl'}>Frame</Heading>

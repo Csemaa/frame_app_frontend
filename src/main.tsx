@@ -11,7 +11,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider>
+    <Provider defaultTheme={'dark'}>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router}></RouterProvider>
         <ReactQueryDevtools/>

@@ -71,7 +71,7 @@ const UserCards = () => {
           >
             {users.map(user => (
               <GridItem>
-                <Link to='/movies'>
+                <Link to='/'>
                   <Card.Root key={user.id} width={'18rem'} onClick={() => login(user)}>
                     <Card.Body>
                       <Box display={'flex'} alignItems={'center'} gap={10} flexDirection={'column'} p={12}>

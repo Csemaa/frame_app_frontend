@@ -33,7 +33,7 @@ const MoviesList = ({ movies, error, isPending }: Props) => {
     if (movies && movies.length == 0) {
         return (
             <Box display={'flex'} minH={'80vh'} alignItems={'center'}>
-                <Text fontSize={'xl'}>{':('} You dont have any movies here</Text>
+                <Text fontSize={'xl'}>You dont have any movies here</Text>
             </Box>
         )
     }
