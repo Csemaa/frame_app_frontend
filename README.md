@@ -1,4 +1,4 @@
-Frame App
+# Frame App
 Bring Your Movie Collection to Life
 
 Frame App is a React-based media player that transforms your local movie files into a streaming service-like experience. Connect your downloaded media with IMDb data, manage users, and browse your personal library with beautiful metadata and organization.
@@ -13,6 +13,9 @@ User Management: Create and manage multiple user profiles
 Movie Library: Organize and browse your collection with rich visuals
 
 No Subscription Required: Your movies, your rules
+
+# Note
+I am aware of the exposed "keys" this is something I would never do with any app
 
 🚀 Quick Start
 Prerequisites
