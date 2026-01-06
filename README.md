@@ -25,3 +25,13 @@ Frame App Backend Service
 Clone and set up: https://github.com/Csemaa/frame_app_backend
 
 Follow the backend setup instructions before starting the frontend
+
+# Clone the repository
+git clone https://github.com/your-username/frame_app_frontend.git
+cd frame_app_frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
