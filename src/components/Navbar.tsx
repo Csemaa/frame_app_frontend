@@ -18,7 +18,7 @@ const Navbar = () => {
                     <Heading size={'3xl'}>Frame</Heading>
                 </HStack>
             </Link>
-            {user.id &&
+            {!!user.id &&
                 <Dialog.Root
                     placement={'center'}
                     motionPreset="slide-in-bottom"
