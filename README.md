@@ -16,6 +16,7 @@ No Subscription Required: Your movies, your rules
 
 # Note
 I am aware of the exposed "keys" this is something I would never do with any app
+App is currently not working since the api is no longer public
 
 🚀 Quick Start
 Prerequisites
@@ -30,7 +31,7 @@ Clone and set up: https://github.com/Csemaa/frame_app_backend
 Follow the backend setup instructions before starting the frontend
 
 # Clone the repository
-git clone https://github.com/your-username/frame_app_frontend.git
+git clone https://github.com/Csemaa/frame_app_frontend.git
 cd frame_app_frontend
 
 # Install dependencies
